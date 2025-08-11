@@ -6,16 +6,21 @@ final class PetRoutineViewController: UIViewController {
     var modelContext: ModelContext?
     var savedPet: Pet?
 
-    private let petTypeSelector = PetTypeSelectorView()
     private let routineListView = RoutineListView()
     private let viewModel = RoutineViewModel()
     private let gradientBackgroundView = GradientBackgroundView()
 
-    private let petTypeTitleLabel: UILabel = {
+    // Scroll alanı ve içerik
+    private let scrollView = UIScrollView()
+    private let contentStack = UIStackView()
+
+    // Başlık
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 28)
         label.textAlignment = .center
         label.textColor = .white
+        label.numberOfLines = 0
         return label
     }()
 
@@ -25,28 +30,24 @@ final class PetRoutineViewController: UIViewController {
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center
         label.textColor = UIColor.white.withAlphaComponent(0.8)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("📦 modelContext geldi mi? -> \(modelContext != nil)")
-
         viewModel.modelContext = modelContext
         view.backgroundColor = .clear
 
         setupGradientBackground()
+        setupNavigationItem()
         setupUI()
         setupBindings()
         setupInitialState()
-        setupNavigationItem()
 
         viewModel.fetchPets()
     }
 
-    // MARK: - UI
+    // MARK: - Gradient
     private func setupGradientBackground() {
         view.addSubview(gradientBackgroundView)
         gradientBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,6 +60,7 @@ final class PetRoutineViewController: UIViewController {
         view.sendSubviewToBack(gradientBackgroundView)
     }
 
+    // MARK: - Navigation Bar
     private func setupNavigationItem() {
         let pawIcon = UIImage(systemName: "pawprint")
         let rightButton = UIBarButtonItem(image: pawIcon, style: .plain, target: self, action: #selector(didTapPetSelector))
@@ -66,74 +68,78 @@ final class PetRoutineViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightButton
 
         let plusIcon = UIImage(systemName: "plus")
-        let leftButton = UIBarButtonItem(image: plusIcon, style: .plain, target: self, action: #selector(didTapAddRoutine))
+        let leftButton = UIBarButtonItem(
+            image: plusIcon,
+            style: .plain,
+            target: self,
+            action: #selector(didTapAddRoutine)
+        )
         leftButton.tintColor = UIColor.white
         navigationItem.leftBarButtonItem = leftButton
     }
 
+    // MARK: - UI Setup
     private func setupUI() {
-        let stack = UIStackView(arrangedSubviews: [
-            petTypeTitleLabel,
-            subtitleLabel,
-            petTypeSelector,
-            routineListView
-        ])
-        stack.axis = .vertical
-        stack.spacing = 20
-        stack.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(stack)
+        // ScrollView
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            stack.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+        // Content Stack
+        contentStack.axis = .vertical
+        contentStack.spacing = 20
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentStack)
+        NSLayoutConstraint.activate([
+            contentStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
+            contentStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            contentStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+            contentStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+            contentStack.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
+        ])
+
+        // Başlıklar
+        contentStack.addArrangedSubview(titleLabel)
+        contentStack.addArrangedSubview(subtitleLabel)
+
+        // Rutin Listesi
+        contentStack.addArrangedSubview(routineListView)
     }
 
+    // MARK: - Bindings
     private func setupBindings() {
-        // 1) List item tap → sıklık sheet
         routineListView.onItemTapped = { [weak self] index, title in
             self?.presentFrequencyOptions(for: index, title: title)
         }
 
-        // 2) Tür picker’ı → türe göre filtrele
-        petTypeSelector.onSelectionChanged = { [weak self] newType in
-            guard let self else { return }
-            self.viewModel.selectPetType(newType)
-            self.petTypeTitleLabel.text = "\(newType.fullDisplayName) Rutinleri"
-        }
-
-        // 3) Pet listesi geldi → bottom sheet
         viewModel.onPetsFetched = { [weak self] pets in
-            print("🐾 fetchPets sonrası gelen pet sayısı: \(pets.count)")
             DispatchQueue.main.async {
                 self?.showPetSelectionBottomSheet(pets: pets)
             }
         }
 
-        // 4) Bir pet seçildi → picker & başlık senkron
-        viewModel.onSelectedPetChanged = { [weak self] _ in
-            guard let self else { return }
-            let t = self.viewModel.selectedPetType ?? .cat
-            DispatchQueue.main.async {
-                self.petTypeSelector.setInitialType(from: t)
-                self.petTypeTitleLabel.text = "\(t.fullDisplayName) Rutinleri"
-                self.updateUI()
-            }
+        viewModel.onSelectedPetChanged = { [weak self] pet in
+            guard let self = self else { return }
+            self.updateHeader(for: pet)
+            self.updateUI()
         }
 
-        // 5) Rutinler değişti → listeyi doldur
         viewModel.onRoutinesUpdated = { [weak self] routines in
-            print("🔄 Rutinler güncellendi, toplam: \(routines.count)")
             DispatchQueue.main.async {
-                let items = routines.map {
+                let items = routines.map { r -> RoutineItemView.Model in
                     RoutineItemView.Model(
-                        icon: UIImage(systemName: $0.iconName),
-                        title: $0.title,
-                        subtitle: $0.frequency,
+                        icon: UIImage(systemName: r.iconName),
+                        title: r.title,
+                        frequencyText: r.frequency,
+                        progressText: self?.viewModel.progressText(r) ?? "",
+                        isCompleted: self?.viewModel.isCompletedThisPeriod(r) ?? false,
                         accessoryIcon: UIImage(systemName: "chevron.right"),
-                        isEnabled: true
+                        tapHandler: nil
                     )
                 }
                 self?.routineListView.setItems(items)
@@ -141,66 +147,82 @@ final class PetRoutineViewController: UIViewController {
         }
     }
 
-    // MARK: - Initial state
+    // MARK: - Initial State
     private func setupInitialState() {
         if let typeString = preselectedPetType,
            let petType = PetType.fromDisplayName(typeString) {
-            print("✅ eşleşti: \(petType.fullDisplayName)")
             viewModel.selectPetType(petType)
-            petTypeSelector.setInitialType(from: petType)
-            petTypeTitleLabel.text = "\(petType.fullDisplayName) Rutinleri"
+            updateHeaderWithType(petType, petName: nil)
         } else if let fallback = fetchLatestPetTypeAsEnum() {
             viewModel.selectPetType(fallback)
-            petTypeSelector.setInitialType(from: fallback)
-            petTypeTitleLabel.text = "\(fallback.fullDisplayName) Rutinleri"
+            updateHeaderWithType(fallback, petName: nil)
         } else {
             viewModel.selectPetType(.cat)
-            petTypeSelector.setInitialType(from: .cat)
-            petTypeTitleLabel.text = "\(PetType.cat.fullDisplayName) Rutinleri"
+            updateHeaderWithType(.cat, petName: nil)
         }
     }
 
+    // MARK: - Header Update
+    private func updateHeader(for pet: Pet) {
+        let type = pet.petTypeEnum
+        updateHeaderWithType(type, petName: pet.name)
+    }
+
+    private func updateHeaderWithType(_ type: PetType, petName: String?) {
+        let emoji: String
+        switch type {
+        case .cat: emoji = "🐱"
+        case .dog: emoji = "🐶"
+        case .bird: emoji = "🐦"
+        case .fish: emoji = "🐠"
+        default: emoji = "🐾"
+        }
+        let namePart = petName ?? type.fullDisplayName
+        titleLabel.text = "\(emoji) Evcil Dostunuzun Rutinleri"
+    }
+
+    // MARK: - Fetch Latest Pet Type
     private func fetchLatestPetTypeAsEnum() -> PetType? {
         do {
             let descriptor = FetchDescriptor<Pet>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
             let pets: [Pet] = try modelContext?.fetch(descriptor) ?? []
             return pets.first?.petTypeEnum
-        } catch {
-            print("❌ Fetch error: \(error)")
-            return nil
-        }
+        } catch { return nil }
     }
 
-    // MARK: - UI updates
+    // MARK: - Update UI
     private func updateUI() {
         let routines = viewModel.getRoutines()
-        print("📦 updateUI: \(routines.count) rutin geldi")
-        let itemModels = routines.map { routine in
+        let itemModels = routines.map { r -> RoutineItemView.Model in
             RoutineItemView.Model(
-                icon: UIImage(systemName: routine.iconName),
-                title: routine.title,
-                subtitle: routine.frequency,
+                icon: UIImage(systemName: r.iconName),
+                title: r.title,
+                frequencyText: r.frequency,
+                progressText: viewModel.progressText(r),
+                isCompleted: viewModel.isCompletedThisPeriod(r),
                 accessoryIcon: UIImage(systemName: "chevron.right"),
-                isEnabled: true
+                tapHandler: nil
             )
         }
         routineListView.setItems(itemModels)
     }
 
-    // MARK: - Bottom sheet (Pet select)
+    // MARK: - Pet Selector Sheet (only names)
     private func showPetSelectionBottomSheet(pets: [Pet]) {
         let sorted = pets.sorted { ($0.createdAt) > ($1.createdAt) }
         let sheet = UIAlertController(title: "Evcil Hayvan Seç", message: nil, preferredStyle: .actionSheet)
 
         for pet in sorted {
-            let title = "\(pet.petTypeEnum.fullDisplayName) - \(pet.name)"
-            sheet.addAction(UIAlertAction(title: title, style: .default) { [weak self] _ in
-                guard let self else { return }
-                self.viewModel.selectPet(pet)
-                self.petTypeSelector.setInitialType(from: pet.petTypeEnum)
-                self.petTypeTitleLabel.text = "\(pet.petTypeEnum.fullDisplayName) Rutinleri"
-                self.updateUI()
-            })
+            let name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let displayName = name.isEmpty ? pet.petTypeEnum.fullDisplayName : name
+
+            let action = UIAlertAction(title: displayName, style: .default) { [weak self] _ in
+                self?.viewModel.selectPet(pet)
+                self?.updateHeader(for: pet)
+                self?.updateUI()
+            }
+        
+            sheet.addAction(action)
         }
 
         sheet.addAction(UIAlertAction(title: "İptal", style: .cancel))
@@ -211,32 +233,38 @@ final class PetRoutineViewController: UIViewController {
             pop.sourceRect = CGRect(x: view.bounds.midX, y: view.safeAreaInsets.top + 44, width: 1, height: 1)
             pop.permittedArrowDirections = []
         }
-
         present(sheet, animated: true)
     }
 
-    // MARK: - Actions
+    // MARK: - Frequency / Done Sheet
     private func presentFrequencyOptions(for index: Int, title: String) {
         let alert = UIAlertController(title: "\(title) sıklığını değiştir", message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Tamamlandı (1 adım)", style: .default) { [weak self] _ in
+            self?.viewModel.markDone(at: index)
+            self?.updateUI()
+        })
+
         let options = ["Günde 1 kez", "Günde 2 kez", "Haftada 1 kez", "Ayda 1 kez"]
         for option in options {
             alert.addAction(UIAlertAction(title: option, style: .default) { [weak self] _ in
                 self?.viewModel.updateFrequency(at: index, to: option)
-                self?.routineListView.updateSubtitle(at: index, to: option)
+                self?.updateUI()
             })
         }
+
         alert.addAction(UIAlertAction(title: "İptal", style: .cancel))
         present(alert, animated: true)
     }
 
+    // MARK: - Actions
     @objc private func didTapPetSelector() {
-        print("🟣 Pati butonuna basıldı!")
         viewModel.fetchPets()
     }
 
     @objc private func didTapAddRoutine() {
         let sheetVC = AddRoutineSheetViewController()
-        sheetVC.onRoutineAdded = { [weak self] (newRoutine: Routine) in
+        sheetVC.onRoutineAdded = { [weak self] newRoutine in
             self?.viewModel.addRoutine(newRoutine)
             self?.updateUI()
         }
@@ -245,5 +273,16 @@ final class PetRoutineViewController: UIViewController {
             sheet.prefersGrabberVisible = true
         }
         present(sheetVC, animated: true)
+    }
+}
+
+// Küçük ikon eşlemesi (opsiyonel)
+private func symbolName(for type: PetType) -> String {
+    switch type {
+    case .cat:  return "pawprint"
+    case .dog:  return "pawprint"
+    case .bird: return "bird"
+    case .fish: return "fish"
+    default:    return "pawprint"
     }
 }

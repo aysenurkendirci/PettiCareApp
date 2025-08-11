@@ -6,71 +6,63 @@ final class SplashViewController: UIViewController {
     var modelContext: ModelContext?
 
     private let backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "sembol4") // 🖼 Tüm tasarım bu görselde zaten var
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    private let getStartedButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Başlayalım!", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemIndigo
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        let iv = UIImageView()
+        iv.image = UIImage(named: "sembol3")   // arka plan görselin
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
-        getStartedButton.addTarget(self, action: #selector(handleGetStarted), for: .touchUpInside)
-    }
+        navigationController?.setNavigationBarHidden(true, animated: false)
 
-    private func setupLayout() {
         view.addSubview(backgroundImageView)
-        view.addSubview(getStartedButton)
-
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            getStartedButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            getStartedButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            getStartedButton.widthAnchor.constraint(equalToConstant: 200),
-            getStartedButton.heightAnchor.constraint(equalToConstant: 50)
+            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 
-    @objc private func handleGetStarted() {
-        Task {
-            guard let context = modelContext else { return }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 2 sn bekle ve geç
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.proceed()
+        }
+    }
 
-            let descriptor = FetchDescriptor<Pet>()
-            let pets = try? context.fetch(descriptor)
+    private func proceed() {
+        guard let context = modelContext else { return }
 
-            if let lastPet = pets?.last {
-                let tabBar = MainTabBarController(
-                    selectedType: lastPet.type,
-                    pet: lastPet,
-                    modelContext: context
-                )
+        // Son eklenen pet'e göre tab bar'a geç; yoksa AddPet'e git
+        let pets = try? context.fetch(FetchDescriptor<Pet>())
+        if let lastPet = pets?.last {
+            let tabBar = MainTabBarController(
+                selectedType: lastPet.type,
+                pet: lastPet,
+                modelContext: context
+            )
+            crossfade(to: UINavigationController(rootViewController: tabBar))
+        } else {
+            let addPetVC = AddPetFullFormViewController()
+            addPetVC.modelContext = context
+            navigationController?.pushViewController(addPetVC, animated: true)
+        }
+    }
 
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                   let window = windowScene.windows.first {
-                    window.rootViewController = UINavigationController(rootViewController: tabBar)
-                    window.makeKeyAndVisible()
-                }
-            } else {
-                let addPetVC = AddPetFullFormViewController()
-                addPetVC.modelContext = context
-                self.navigationController?.pushViewController(addPetVC, animated: true)
-            }
+    private func crossfade(to root: UIViewController) {
+        guard
+            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let window = scene.windows.first
+        else { return }
+
+        // yumuşak geçiş
+        UIView.transition(with: window, duration: 0.35, options: .transitionCrossDissolve) {
+            window.rootViewController = root
+            window.makeKeyAndVisible()
         }
     }
 }

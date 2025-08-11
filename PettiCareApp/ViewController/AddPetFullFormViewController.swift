@@ -28,7 +28,6 @@ final class AddPetFullFormViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let gradientBackgroundView = GradientBackgroundView()
-
     private let viewModel = AddPetViewModel()
 
     override func viewDidLoad() {

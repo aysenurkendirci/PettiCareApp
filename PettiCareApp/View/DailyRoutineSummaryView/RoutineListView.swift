@@ -10,17 +10,13 @@ final class RoutineListView: UIView {
     private(set) var itemViews: [RoutineItemView] = []
     private var heightConstraint: NSLayoutConstraint?
 
-    // MARK: - Init
     override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+        super.init(frame: frame); setupUI()
     }
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
+        super.init(coder: coder); setupUI()
     }
 
-    // MARK: - Public API
     func setItems(_ models: [RoutineItemView.Model]) {
         // Temizle
         itemViews.forEach { $0.removeFromSuperview() }
@@ -33,13 +29,13 @@ final class RoutineListView: UIView {
                 self?.onItemTapped?(idx, model.title)
             }
             let item = RoutineItemView(model: m)
-            item.layer.cornerRadius = 12
+            item.layer.cornerRadius = 16
             item.clipsToBounds = true
             stackView.addArrangedSubview(item)
             itemViews.append(item)
         }
 
-        // İçeriğe göre kendi yüksekliğini ayarla (stack içinde 0'a düşmesin)
+        // Otomatik yükseklik
         layoutIfNeeded()
         let target = CGSize(width: bounds.width > 0 ? bounds.width : UIScreen.main.bounds.width - 32,
                             height: UIView.layoutFittingCompressedSize.height)
@@ -63,7 +59,6 @@ final class RoutineListView: UIView {
         itemViews[index].updateSubtitle(text)
     }
 
-    // MARK: - Private
     private func setupUI() {
         backgroundColor = .clear
 
@@ -94,7 +89,6 @@ final class RoutineListView: UIView {
             stackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
 
-        // Başlangıçta min yükseklik (stack içinde 0 olmasın)
         heightConstraint = heightAnchor.constraint(equalToConstant: 1)
         heightConstraint?.priority = .defaultLow
         heightConstraint?.isActive = true

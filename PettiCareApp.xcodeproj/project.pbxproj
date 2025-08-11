@@ -7,20 +7,86 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE2130A32E4863BA00518B7F /* GradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2130A22E4863BA00518B7F /* GradientBackgroundView.swift */; };
+		BE2130A52E4864B700518B7F /* PetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2130A42E4864B700518B7F /* PetProfileViewController.swift */; };
+		BE2130A72E48FB7A00518B7F /* RoutineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2130A62E48FB7A00518B7F /* RoutineHeaderView.swift */; };
+		BEB958E52E47DD860081E7BD /* AddPetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958E42E47DD860081E7BD /* AddPetModel.swift */; };
+		BEB958E82E47DDE00081E7BD /* FavoriteVetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958E72E47DDE00081E7BD /* FavoriteVetModel.swift */; };
+		BEB958EA2E47DDFB0081E7BD /* VetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958E92E47DDFB0081E7BD /* VetModel.swift */; };
+		BEB958EF2E47DE6C0081E7BD /* RoutineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958EE2E47DE6C0081E7BD /* RoutineModel.swift */; };
+		BEB958F12E47DEA90081E7BD /* sembol3.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB958F02E47DEA90081E7BD /* sembol3.png */; };
+		BEB958F32E47DEE00081E7BD /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958F22E47DEE00081E7BD /* UIColor.swift */; };
+		BEB958F82E47DF750081E7BD /* GradientButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958F72E47DF750081E7BD /* GradientButtonView.swift */; };
+		BEB958FA2E47DF7E0081E7BD /* RoutineFrequencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958F92E47DF7E0081E7BD /* RoutineFrequencyPickerView.swift */; };
+		BEB958FC2E47DF8C0081E7BD /* RoutineNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958FB2E47DF8C0081E7BD /* RoutineNameInputView.swift */; };
+		BEB958FF2E47DFB90081E7BD /* PetTypeSelectorView .swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB958FE2E47DFB90081E7BD /* PetTypeSelectorView .swift */; };
+		BEB959012E47DFC20081E7BD /* RoutineCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959002E47DFC20081E7BD /* RoutineCardView.swift */; };
+		BEB959032E47DFCB0081E7BD /* RoutineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959022E47DFCB0081E7BD /* RoutineItemView.swift */; };
+		BEB959052E47DFD10081E7BD /* RoutineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959042E47DFD10081E7BD /* RoutineListView.swift */; };
+		BEB959072E47DFE40081E7BD /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959062E47DFE40081E7BD /* AddPetViewModel.swift */; };
+		BEB959092E47DFF10081E7BD /* PetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959082E47DFF10081E7BD /* PetProfileViewModel.swift */; };
+		BEB9590B2E47DFFA0081E7BD /* RoutineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9590A2E47DFFA0081E7BD /* RoutineViewModel.swift */; };
+		BEB9590D2E47DFFF0081E7BD /* VetMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9590C2E47DFFF0081E7BD /* VetMapViewModel.swift */; };
+		BEB959102E47E0320081E7BD /* PetProfileCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9590F2E47E0320081E7BD /* PetProfileCardView.swift */; };
+		BEB959132E47E0590081E7BD /* PetBirthDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959122E47E0590081E7BD /* PetBirthDatePickerView.swift */; };
+		BEB959152E47E05E0081E7BD /* PetBreedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959142E47E05E0081E7BD /* PetBreedPickerView.swift */; };
+		BEB959172E47E06D0081E7BD /* PetColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959162E47E06D0081E7BD /* PetColorPickerView.swift */; };
+		BEB959192E47E0740081E7BD /* PetFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959182E47E0740081E7BD /* PetFeaturesView.swift */; };
+		BEB9591B2E47E07C0081E7BD /* PetNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9591A2E47E07C0081E7BD /* PetNameInputView.swift */; };
+		BEB9591D2E47E0820081E7BD /* PetSizeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9591C2E47E0820081E7BD /* PetSizeInputView.swift */; };
+		BEB9591F2E47E08A0081E7BD /* PetTypePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9591E2E47E08A0081E7BD /* PetTypePickerView.swift */; };
+		BEB959212E47E0BB0081E7BD /* AddPetFullFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959202E47E0BB0081E7BD /* AddPetFullFormViewController.swift */; };
+		BEB959232E47E0C10081E7BD /* AddRoutineSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959222E47E0C10081E7BD /* AddRoutineSheetViewController.swift */; };
+		BEB959252E47E0C80081E7BD /* FavoriteVetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959242E47E0C80081E7BD /* FavoriteVetsViewController.swift */; };
+		BEB959272E47E0CE0081E7BD /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB959262E47E0CE0081E7BD /* MainTabBarController.swift */; };
+		BEB9592B2E47E0F50081E7BD /* PetRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9592A2E47E0F50081E7BD /* PetRoutineViewController.swift */; };
+		BEB9592D2E47E1010081E7BD /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9592C2E47E1010081E7BD /* SplashViewController.swift */; };
+		BEB9592F2E47E1080081E7BD /* VetMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB9592E2E47E1080081E7BD /* VetMapViewController.swift */; };
 		BED9EDBC2E47D549007BECE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9EDBB2E47D549007BECE4 /* AppDelegate.swift */; };
 		BED9EDBE2E47D549007BECE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9EDBD2E47D549007BECE4 /* SceneDelegate.swift */; };
-		BED9EDC02E47D549007BECE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9EDBF2E47D549007BECE4 /* ViewController.swift */; };
-		BED9EDC32E47D549007BECE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED9EDC12E47D549007BECE4 /* Main.storyboard */; };
 		BED9EDC52E47D54B007BECE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BED9EDC42E47D54B007BECE4 /* Assets.xcassets */; };
 		BED9EDC82E47D54B007BECE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED9EDC62E47D54B007BECE4 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE2130A22E4863BA00518B7F /* GradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackgroundView.swift; sourceTree = "<group>"; };
+		BE2130A42E4864B700518B7F /* PetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetProfileViewController.swift; sourceTree = "<group>"; };
+		BE2130A62E48FB7A00518B7F /* RoutineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineHeaderView.swift; sourceTree = "<group>"; };
+		BEB958E42E47DD860081E7BD /* AddPetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetModel.swift; sourceTree = "<group>"; };
+		BEB958E72E47DDE00081E7BD /* FavoriteVetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteVetModel.swift; sourceTree = "<group>"; };
+		BEB958E92E47DDFB0081E7BD /* VetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetModel.swift; sourceTree = "<group>"; };
+		BEB958EE2E47DE6C0081E7BD /* RoutineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineModel.swift; sourceTree = "<group>"; };
+		BEB958F02E47DEA90081E7BD /* sembol3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sembol3.png; sourceTree = "<group>"; };
+		BEB958F22E47DEE00081E7BD /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		BEB958F72E47DF750081E7BD /* GradientButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButtonView.swift; sourceTree = "<group>"; };
+		BEB958F92E47DF7E0081E7BD /* RoutineFrequencyPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineFrequencyPickerView.swift; sourceTree = "<group>"; };
+		BEB958FB2E47DF8C0081E7BD /* RoutineNameInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineNameInputView.swift; sourceTree = "<group>"; };
+		BEB958FE2E47DFB90081E7BD /* PetTypeSelectorView .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PetTypeSelectorView .swift"; sourceTree = "<group>"; };
+		BEB959002E47DFC20081E7BD /* RoutineCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineCardView.swift; sourceTree = "<group>"; };
+		BEB959022E47DFCB0081E7BD /* RoutineItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineItemView.swift; sourceTree = "<group>"; };
+		BEB959042E47DFD10081E7BD /* RoutineListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineListView.swift; sourceTree = "<group>"; };
+		BEB959062E47DFE40081E7BD /* AddPetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
+		BEB959082E47DFF10081E7BD /* PetProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetProfileViewModel.swift; sourceTree = "<group>"; };
+		BEB9590A2E47DFFA0081E7BD /* RoutineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineViewModel.swift; sourceTree = "<group>"; };
+		BEB9590C2E47DFFF0081E7BD /* VetMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VetMapViewModel.swift; sourceTree = "<group>"; };
+		BEB9590F2E47E0320081E7BD /* PetProfileCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetProfileCardView.swift; sourceTree = "<group>"; };
+		BEB959122E47E0590081E7BD /* PetBirthDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetBirthDatePickerView.swift; sourceTree = "<group>"; };
+		BEB959142E47E05E0081E7BD /* PetBreedPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetBreedPickerView.swift; sourceTree = "<group>"; };
+		BEB959162E47E06D0081E7BD /* PetColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetColorPickerView.swift; sourceTree = "<group>"; };
+		BEB959182E47E0740081E7BD /* PetFeaturesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetFeaturesView.swift; sourceTree = "<group>"; };
+		BEB9591A2E47E07C0081E7BD /* PetNameInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetNameInputView.swift; sourceTree = "<group>"; };
+		BEB9591C2E47E0820081E7BD /* PetSizeInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetSizeInputView.swift; sourceTree = "<group>"; };
+		BEB9591E2E47E08A0081E7BD /* PetTypePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetTypePickerView.swift; sourceTree = "<group>"; };
+		BEB959202E47E0BB0081E7BD /* AddPetFullFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPetFullFormViewController.swift; sourceTree = "<group>"; };
+		BEB959222E47E0C10081E7BD /* AddRoutineSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRoutineSheetViewController.swift; sourceTree = "<group>"; };
+		BEB959242E47E0C80081E7BD /* FavoriteVetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteVetsViewController.swift; sourceTree = "<group>"; };
+		BEB959262E47E0CE0081E7BD /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		BEB9592A2E47E0F50081E7BD /* PetRoutineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetRoutineViewController.swift; sourceTree = "<group>"; };
+		BEB9592C2E47E1010081E7BD /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		BEB9592E2E47E1080081E7BD /* VetMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VetMapViewController.swift; sourceTree = "<group>"; };
 		BED9EDB82E47D549007BECE4 /* PettiCareApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PettiCareApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BED9EDBB2E47D549007BECE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BED9EDBD2E47D549007BECE4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BED9EDBF2E47D549007BECE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BED9EDC22E47D549007BECE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BED9EDC42E47D54B007BECE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BED9EDC72E47D54B007BECE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BED9EDC92E47D54B007BECE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,9 +103,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BEB958E32E47DD570081E7BD /* AddPet */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958E42E47DD860081E7BD /* AddPetModel.swift */,
+			);
+			path = AddPet;
+			sourceTree = "<group>";
+		};
+		BEB958E62E47DD970081E7BD /* VetLocatoryModel */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958E72E47DDE00081E7BD /* FavoriteVetModel.swift */,
+				BEB958E92E47DDFB0081E7BD /* VetModel.swift */,
+			);
+			path = VetLocatoryModel;
+			sourceTree = "<group>";
+		};
+		BEB958ED2E47DE530081E7BD /* Routines */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958EE2E47DE6C0081E7BD /* RoutineModel.swift */,
+			);
+			path = Routines;
+			sourceTree = "<group>";
+		};
+		BEB958F62E47DF5D0081E7BD /* AddRoutineSheetView */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958F72E47DF750081E7BD /* GradientButtonView.swift */,
+				BEB958F92E47DF7E0081E7BD /* RoutineFrequencyPickerView.swift */,
+				BEB958FB2E47DF8C0081E7BD /* RoutineNameInputView.swift */,
+			);
+			path = AddRoutineSheetView;
+			sourceTree = "<group>";
+		};
+		BEB958FD2E47DF950081E7BD /* DailyRoutineSummaryView */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958FE2E47DFB90081E7BD /* PetTypeSelectorView .swift */,
+				BEB959002E47DFC20081E7BD /* RoutineCardView.swift */,
+				BEB959022E47DFCB0081E7BD /* RoutineItemView.swift */,
+				BEB959042E47DFD10081E7BD /* RoutineListView.swift */,
+			);
+			path = DailyRoutineSummaryView;
+			sourceTree = "<group>";
+		};
+		BEB9590E2E47E01A0081E7BD /* PetProfileCardView */ = {
+			isa = PBXGroup;
+			children = (
+				BEB9590F2E47E0320081E7BD /* PetProfileCardView.swift */,
+			);
+			path = PetProfileCardView;
+			sourceTree = "<group>";
+		};
+		BEB959112E47E0400081E7BD /* PetFormView */ = {
+			isa = PBXGroup;
+			children = (
+				BEB959122E47E0590081E7BD /* PetBirthDatePickerView.swift */,
+				BEB959142E47E05E0081E7BD /* PetBreedPickerView.swift */,
+				BEB959162E47E06D0081E7BD /* PetColorPickerView.swift */,
+				BEB959182E47E0740081E7BD /* PetFeaturesView.swift */,
+				BEB9591A2E47E07C0081E7BD /* PetNameInputView.swift */,
+				BEB9591C2E47E0820081E7BD /* PetSizeInputView.swift */,
+				BEB9591E2E47E08A0081E7BD /* PetTypePickerView.swift */,
+			);
+			path = PetFormView;
+			sourceTree = "<group>";
+		};
 		BED9EDAF2E47D549007BECE4 = {
 			isa = PBXGroup;
 			children = (
+				BEB958F22E47DEE00081E7BD /* UIColor.swift */,
 				BED9EDBA2E47D549007BECE4 /* PettiCareApp */,
 				BED9EDB92E47D549007BECE4 /* Products */,
 			);
@@ -56,15 +191,83 @@
 		BED9EDBA2E47D549007BECE4 /* PettiCareApp */ = {
 			isa = PBXGroup;
 			children = (
-				BED9EDBB2E47D549007BECE4 /* AppDelegate.swift */,
-				BED9EDBD2E47D549007BECE4 /* SceneDelegate.swift */,
-				BED9EDBF2E47D549007BECE4 /* ViewController.swift */,
-				BED9EDC12E47D549007BECE4 /* Main.storyboard */,
+				BED9EDCF2E47D64B007BECE4 /* ViewController */,
+				BED9EDD02E47D66B007BECE4 /* ViewModel */,
+				BED9EDD22E47D69C007BECE4 /* View */,
+				BED9EDD12E47D683007BECE4 /* Model */,
+				BED9EDD42E47D6B3007BECE4 /* Core */,
+				BED9EDD32E47D6A7007BECE4 /* Resources */,
 				BED9EDC42E47D54B007BECE4 /* Assets.xcassets */,
+				BEB958F02E47DEA90081E7BD /* sembol3.png */,
 				BED9EDC62E47D54B007BECE4 /* LaunchScreen.storyboard */,
 				BED9EDC92E47D54B007BECE4 /* Info.plist */,
 			);
 			path = PettiCareApp;
+			sourceTree = "<group>";
+		};
+		BED9EDCF2E47D64B007BECE4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BEB959202E47E0BB0081E7BD /* AddPetFullFormViewController.swift */,
+				BEB959222E47E0C10081E7BD /* AddRoutineSheetViewController.swift */,
+				BEB959242E47E0C80081E7BD /* FavoriteVetsViewController.swift */,
+				BEB959262E47E0CE0081E7BD /* MainTabBarController.swift */,
+				BEB9592A2E47E0F50081E7BD /* PetRoutineViewController.swift */,
+				BEB9592C2E47E1010081E7BD /* SplashViewController.swift */,
+				BEB9592E2E47E1080081E7BD /* VetMapViewController.swift */,
+				BE2130A42E4864B700518B7F /* PetProfileViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		BED9EDD02E47D66B007BECE4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BEB959062E47DFE40081E7BD /* AddPetViewModel.swift */,
+				BEB959082E47DFF10081E7BD /* PetProfileViewModel.swift */,
+				BEB9590A2E47DFFA0081E7BD /* RoutineViewModel.swift */,
+				BEB9590C2E47DFFF0081E7BD /* VetMapViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BED9EDD12E47D683007BECE4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BEB958ED2E47DE530081E7BD /* Routines */,
+				BEB958E62E47DD970081E7BD /* VetLocatoryModel */,
+				BEB958E32E47DD570081E7BD /* AddPet */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BED9EDD22E47D69C007BECE4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BEB959112E47E0400081E7BD /* PetFormView */,
+				BEB9590E2E47E01A0081E7BD /* PetProfileCardView */,
+				BEB958FD2E47DF950081E7BD /* DailyRoutineSummaryView */,
+				BEB958F62E47DF5D0081E7BD /* AddRoutineSheetView */,
+				BE2130A22E4863BA00518B7F /* GradientBackgroundView.swift */,
+				BE2130A62E48FB7A00518B7F /* RoutineHeaderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BED9EDD32E47D6A7007BECE4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BED9EDD42E47D6B3007BECE4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BED9EDBB2E47D549007BECE4 /* AppDelegate.swift */,
+				BED9EDBD2E47D549007BECE4 /* SceneDelegate.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +330,7 @@
 			files = (
 				BED9EDC82E47D54B007BECE4 /* LaunchScreen.storyboard in Resources */,
 				BED9EDC52E47D54B007BECE4 /* Assets.xcassets in Resources */,
-				BED9EDC32E47D549007BECE4 /* Main.storyboard in Resources */,
+				BEB958F12E47DEA90081E7BD /* sembol3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +341,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BED9EDC02E47D549007BECE4 /* ViewController.swift in Sources */,
+				BEB959192E47E0740081E7BD /* PetFeaturesView.swift in Sources */,
+				BE2130A52E4864B700518B7F /* PetProfileViewController.swift in Sources */,
+				BEB958F82E47DF750081E7BD /* GradientButtonView.swift in Sources */,
+				BEB959272E47E0CE0081E7BD /* MainTabBarController.swift in Sources */,
+				BEB959252E47E0C80081E7BD /* FavoriteVetsViewController.swift in Sources */,
+				BEB958EF2E47DE6C0081E7BD /* RoutineModel.swift in Sources */,
+				BEB9591D2E47E0820081E7BD /* PetSizeInputView.swift in Sources */,
+				BEB9592B2E47E0F50081E7BD /* PetRoutineViewController.swift in Sources */,
+				BEB959172E47E06D0081E7BD /* PetColorPickerView.swift in Sources */,
+				BEB959032E47DFCB0081E7BD /* RoutineItemView.swift in Sources */,
+				BEB959152E47E05E0081E7BD /* PetBreedPickerView.swift in Sources */,
+				BEB958F32E47DEE00081E7BD /* UIColor.swift in Sources */,
+				BEB9592F2E47E1080081E7BD /* VetMapViewController.swift in Sources */,
+				BEB959012E47DFC20081E7BD /* RoutineCardView.swift in Sources */,
+				BEB959052E47DFD10081E7BD /* RoutineListView.swift in Sources */,
+				BEB959072E47DFE40081E7BD /* AddPetViewModel.swift in Sources */,
+				BEB958FA2E47DF7E0081E7BD /* RoutineFrequencyPickerView.swift in Sources */,
+				BEB9591F2E47E08A0081E7BD /* PetTypePickerView.swift in Sources */,
 				BED9EDBC2E47D549007BECE4 /* AppDelegate.swift in Sources */,
+				BEB958FC2E47DF8C0081E7BD /* RoutineNameInputView.swift in Sources */,
+				BE2130A72E48FB7A00518B7F /* RoutineHeaderView.swift in Sources */,
+				BEB959092E47DFF10081E7BD /* PetProfileViewModel.swift in Sources */,
 				BED9EDBE2E47D549007BECE4 /* SceneDelegate.swift in Sources */,
+				BEB959232E47E0C10081E7BD /* AddRoutineSheetViewController.swift in Sources */,
+				BEB959132E47E0590081E7BD /* PetBirthDatePickerView.swift in Sources */,
+				BEB959102E47E0320081E7BD /* PetProfileCardView.swift in Sources */,
+				BEB958EA2E47DDFB0081E7BD /* VetModel.swift in Sources */,
+				BEB958E52E47DD860081E7BD /* AddPetModel.swift in Sources */,
+				BEB958E82E47DDE00081E7BD /* FavoriteVetModel.swift in Sources */,
+				BEB9590D2E47DFFF0081E7BD /* VetMapViewModel.swift in Sources */,
+				BEB958FF2E47DFB90081E7BD /* PetTypeSelectorView .swift in Sources */,
+				BEB9591B2E47E07C0081E7BD /* PetNameInputView.swift in Sources */,
+				BEB959212E47E0BB0081E7BD /* AddPetFullFormViewController.swift in Sources */,
+				BEB9590B2E47DFFA0081E7BD /* RoutineViewModel.swift in Sources */,
+				BE2130A32E4863BA00518B7F /* GradientBackgroundView.swift in Sources */,
+				BEB9592D2E47E1010081E7BD /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		BED9EDC12E47D549007BECE4 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BED9EDC22E47D549007BECE4 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BED9EDC62E47D54B007BECE4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -294,11 +522,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PettiCareApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "En yakın veterinerleri göstermek için konumunuzu kullanıyoruz.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Profil fotoğrafınızı seçmek için fotoğraf galerinize erişmemiz gerekiyor.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,11 +553,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PettiCareApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "En yakın veterinerleri göstermek için konumunuzu kullanıyoruz.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Profil fotoğrafınızı seçmek için fotoğraf galerinize erişmemiz gerekiyor.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

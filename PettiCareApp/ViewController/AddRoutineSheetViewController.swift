@@ -54,9 +54,11 @@ final class AddRoutineSheetViewController: UIViewController {
     @objc private func handleSave() {
         let newRoutine = Routine(
             title: nameInput.routineName,
-            frequency: frequencyPicker.selectedFrequency, iconName: "star.fill"
+            iconName: "star.fill",  // iconName ikinci parametre
+            frequency: frequencyPicker.selectedFrequency
         )
         onRoutineAdded?(newRoutine)
         dismiss(animated: true)
     }
+
 }

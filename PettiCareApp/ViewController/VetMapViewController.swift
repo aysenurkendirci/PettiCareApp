@@ -1,93 +1,169 @@
 import UIKit
-import MapKit // MapKit framework’ünü ekle
+import MapKit
 import SwiftData
 
 final class VetMapViewController: UIViewController, MKMapViewDelegate {
+
+    private var searchDebounce: DispatchWorkItem?
+    private var isProgrammaticRegionChange = false
+
     private let mapView = MKMapView()
     private let viewModel = VetMapViewModel()
     var modelContext: ModelContext?
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupMapView()
 
-        let favoriteButton = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: self, action: #selector(openFavorites))
-        navigationItem.rightBarButtonItem = favoriteButton
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "heart.fill"),
+            style: .plain,
+            target: self,
+            action: #selector(openFavorites)
+        )
 
         viewModel.modelContext = modelContext
         bindViewModel()
         viewModel.start()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Konum gelmese bile, ekrandaki merkezle bir defa aramayı tetikle (ViewModel throttle ediyor)
+        let center = mapView.userLocation.location?.coordinate ?? mapView.centerCoordinate
+        viewModel.throttledSearch(around: center)
+    }
+
+    // MARK: - Setup
     private func setupMapView() {
-        mapView.showsUserLocation = true
-        mapView.delegate = self
-        view.addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mapView)
         NSLayoutConstraint.activate([
             mapView.topAnchor.constraint(equalTo: view.topAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+
+        let tracking = MKUserTrackingButton(mapView: mapView)
+        tracking.translatesAutoresizingMaskIntoConstraints = false
+        tracking.backgroundColor = .secondarySystemBackground
+        tracking.layer.cornerRadius = 8
+        view.addSubview(tracking)
+        NSLayoutConstraint.activate([
+            tracking.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            tracking.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            tracking.widthAnchor.constraint(equalToConstant: 40),
+            tracking.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
 
+    // MARK: - Bindings
     private func bindViewModel() {
         viewModel.onVetsUpdated = { [weak self] vets in
-            print("📌 \(vets.count) pin haritaya ekleniyor")
             DispatchQueue.main.async {
-                self?.mapView.removeAnnotations(self?.mapView.annotations ?? [])
-                for vet in vets {
-                    print("📍 Pin: \(vet.name) @ \(vet.coordinate.latitude), \(vet.coordinate.longitude)")
-                    let annotation = MKPointAnnotation()
-                    annotation.title = vet.name
-                    annotation.coordinate = vet.coordinate
-                    self?.mapView.addAnnotation(annotation)
+                guard let self = self else { return }
+                let map = self.mapView
+
+                // Öncekileri temizle (kullanıcı konumu kalsın)
+                let toRemove = map.annotations.filter { !($0 is MKUserLocation) }
+                map.removeAnnotations(toRemove)
+
+                // Yeni pinleri ekle
+                var added: [MKAnnotation] = []
+                for v in vets {
+                    let ann = MKPointAnnotation()
+                    ann.title = v.name
+                    ann.coordinate = v.coordinate
+                    map.addAnnotation(ann)
+                    added.append(ann)
+                }
+
+                // 👇 En kritik kısım: Pinleri kesin olarak görünür yap
+                if !added.isEmpty {
+                    self.isProgrammaticRegionChange = true
+                    var toShow = added
+                    // Kullanıcı konumu da varsa kadraja kat
+                    if let userLoc = map.userLocation.location {
+                        let uAnn = MKPointAnnotation()
+                        uAnn.coordinate = userLoc.coordinate
+                        toShow.append(uAnn)
+                    }
+                    map.showAnnotations(toShow, animated: true)
                 }
             }
         }
 
-        viewModel.onUserLocationUpdated = { [weak self] location in
+        viewModel.onUserLocationUpdated = { [weak self] loc in
             DispatchQueue.main.async {
-                let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
-                self?.mapView.setRegion(region, animated: true)
+                guard let self = self else { return }
+                self.isProgrammaticRegionChange = true
+                let region = MKCoordinateRegion(center: loc,
+                                                latitudinalMeters: 5000,
+                                                longitudinalMeters: 5000)
+                self.mapView.setRegion(region, animated: true)
             }
+        }
+
+        viewModel.onShowAlert = { [weak self] alert in
+            DispatchQueue.main.async { self?.present(alert, animated: true) }
         }
     }
 
+    // MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
-        let identifier = "VetPin"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-            annotationView?.markerTintColor = .red
-            annotationView?.titleVisibility = .adaptive
+        let id = "VetPin"
+        var v = mapView.dequeueReusableAnnotationView(withIdentifier: id) as? MKMarkerAnnotationView
+        if v == nil {
+            v = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: id)
+            v?.canShowCallout = true
+            v?.markerTintColor = .red
         } else {
-            annotationView?.annotation = annotation
+            v?.annotation = annotation
         }
-        print("📍 Pin görünümü oluşturuldu: \(annotation.title ?? "Bilinmeyen")")
-        return annotationView
+        return v
+    }
+
+    // Programatik zoom sonrası tetiklenen regionDidChange'de arama yapma
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if isProgrammaticRegionChange {
+            isProgrammaticRegionChange = false
+            return
+        }
+        // Kullanıcı kaydırdı/zoomladı → yeni merkeze göre aramayı throttle ile tetikle
+        searchDebounce?.cancel()
+        let center = mapView.centerCoordinate
+        let work = DispatchWorkItem { [weak self] in
+            self?.viewModel.throttledSearch(around: center)
+        }
+        searchDebounce = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: work)
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let title = view.annotation?.title ?? "",
-              let coordinate = view.annotation?.coordinate else { return }
+        guard let ann = view.annotation else { return }
+        let name = ann.title ?? "Veteriner"
+        let vet = Vet(name: name ?? "Veteriner", coordinate: ann.coordinate)
 
-        let vet = Vet(name: title, coordinate: coordinate)
-        let alert = UIAlertController(title: title, message: "Favorilere eklemek ister misiniz?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ekle", style: .default, handler: { _ in
-            self.viewModel.saveToFavorites(vet: vet)
-        }))
+        let alert = UIAlertController(title: name, message: "Favorilere eklemek ister misiniz?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ekle", style: .default) { [weak self] _ in
+            self?.viewModel.saveToFavorites(vet: vet)
+        })
         alert.addAction(UIAlertAction(title: "İptal", style: .cancel))
         present(alert, animated: true)
     }
 
+    // MARK: - Actions
     @objc private func openFavorites() {
-        let favoritesVC = FavoriteVetsViewController()
-        favoritesVC.modelContext = modelContext
-        navigationController?.pushViewController(favoritesVC, animated: true)
+        let vc = FavoriteVetsViewController()
+        vc.modelContext = modelContext
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
